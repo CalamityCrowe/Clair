@@ -9,9 +9,26 @@
 /**
  * 
  */
+class AUnitBaseCharacter;
+
 UCLASS()
 class CLAIR_API AClairGamemode : public AGameModeBase
 {
 	GENERATED_BODY()
-	
+public:
+	AClairGamemode();
+
+	virtual void BeginPlay() override;
+
+	virtual void TurnRequest(AUnitBaseCharacter* Unit); 
+
+private: 
+
+	virtual void StartTurn();
+	virtual void ReadyNextTurn();
+
+	bool bStartTurn; 
+
+	TArray<AUnitBaseCharacter*> TurnOrder;
+
 };
