@@ -3,3 +3,13 @@
 
 #include "Player/BattlePlayerController.h"
 
+ABattlePlayerController::ABattlePlayerController()
+{
+	bAutoManageActiveCameraTarget = false;
+	bShowMouseCursor = true; 
+}
+
+void ABattlePlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+}

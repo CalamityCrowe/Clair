@@ -3,7 +3,11 @@
 
 #include "Gamefiles/ClairGamemode.h"
 #include "Characters/UnitBaseCharacter.h"
+#include "Characters/Party/PartyUnitBase.h"
+#include "Characters/Enemy/EnemyUnitBase.h"
 #include "Components/CombatComponent.h"
+#include "Actors/TopDownCamera.h"
+#include "Kismet/GameplayStatics.h"
 
 AClairGamemode::AClairGamemode()
 {
@@ -13,6 +17,25 @@ AClairGamemode::AClairGamemode()
 void AClairGamemode::BeginPlay()
 {
 	Super::BeginPlay();
+	MainBattleCamera = Cast<ATopDownCamera>(UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCamera::StaticClass()));
+	if (MainBattleCamera)
+	{
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetViewTargetWithBlend(MainBattleCamera, 2.0f);
+	}
+
+	TArray<AActor*> FoundUnits;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AUnitBaseCharacter::StaticClass(), FoundUnits);
+	for (AActor* Unit : FoundUnits)
+	{
+		if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(Unit))
+		{
+			PartyUnits.AddUnique(PartyUnit);
+		}
+		else if (AEnemyUnitBase* EnemyUnit = Cast<AEnemyUnitBase>(Unit))
+		{
+			EnemyUnits.AddUnique(EnemyUnit);
+		}
+	}
 }
 
 void AClairGamemode::TurnRequest(AUnitBaseCharacter* Unit)
@@ -24,7 +47,7 @@ void AClairGamemode::TurnRequest(AUnitBaseCharacter* Unit)
 
 void AClairGamemode::StartTurn()
 {
-	if(bStartTurn)
+	if (bStartTurn)
 	{
 		if (TurnOrder.IsValidIndex(0))
 		{
@@ -32,15 +55,15 @@ void AClairGamemode::StartTurn()
 			bStartTurn = false;
 			// bind to end turn event
 			TurnOrder[0]->GetCombatComponent()->OnTurnEnded.AddDynamic(this, &AClairGamemode::ReadyNextTurn);
-			TurnOrder.RemoveAt(0); 
+			TurnOrder.RemoveAt(0);
 			bStartTurn = false;
 		}
 		else
 		{
 			bStartTurn = true;
-			if (TurnOrder.IsValidIndex(0)) 
+			if (TurnOrder.IsValidIndex(0))
 			{
-				StartTurn(); 
+				StartTurn();
 			}
 		}
 	}

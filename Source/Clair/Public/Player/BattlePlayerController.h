@@ -13,5 +13,9 @@ UCLASS()
 class CLAIR_API ABattlePlayerController : public APlayerController
 {
 	GENERATED_BODY()
-	
+public:
+	ABattlePlayerController();
+
+protected:
+	virtual void BeginPlay() override;
 };

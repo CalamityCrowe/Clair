@@ -10,6 +10,9 @@
  * 
  */
 class AUnitBaseCharacter;
+class APartyUnitBase;
+class AEnemyUnitBase;
+class ATopDownCamera;
 
 UCLASS()
 class CLAIR_API AClairGamemode : public AGameModeBase
@@ -30,5 +33,9 @@ private:
 	bool bStartTurn; 
 
 	TArray<AUnitBaseCharacter*> TurnOrder;
+	TArray<TObjectPtr<APartyUnitBase>> PartyUnits;
+	TArray<TObjectPtr<AEnemyUnitBase>> EnemyUnits;
 
+
+	ATopDownCamera* MainBattleCamera;
 };

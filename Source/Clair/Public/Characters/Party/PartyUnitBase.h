@@ -18,5 +18,9 @@ public:
 protected: 
 	virtual void BeginPlay() override;
 
+private: 
+
+	FText Name; 
+
 
 };
