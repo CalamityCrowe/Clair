@@ -11,19 +11,22 @@ ABattlePlayerController::ABattlePlayerController()
 	bShowMouseCursor = true;
 }
 
-void ABattlePlayerController::BeginPlay()
+void ABattlePlayerController::CreateBattleHUD()
 {
-	Super::BeginPlay();
 	if (BattleHUDClass)
 	{
 		BattleHUD = CreateWidget<UBattleHUD>(this, BattleHUDClass);
 		if (BattleHUD)
 		{
 			BattleHUD->AddToViewport();
-
-			AClairGamemode* GM = Cast<AClairGamemode>(GetWorld()->GetAuthGameMode());
-			GM->SetupBattleHUD(BattleHUD);
-
 		}
 	}
+}
+
+void ABattlePlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+
+
 }

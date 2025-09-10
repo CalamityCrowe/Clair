@@ -69,6 +69,49 @@ float AUnitBaseCharacter::GetMaxMana() const
 	return 0.0f;
 }
 
+float AUnitBaseCharacter::GetStrength() const
+{
+	if (AttributeSetBase)
+	{
+		return AttributeSetBase->GetStrength();
+	}
+	return 0.0f;
+}
+float AUnitBaseCharacter::GetMagic() const
+{
+	if (AttributeSetBase)
+	{
+		return AttributeSetBase->GetMagic();
+	}
+	return 0.0f;
+}
+float AUnitBaseCharacter::GetDefence() const
+{
+	if (AttributeSetBase)
+	{
+		return AttributeSetBase->GetDefence();
+	}
+	return 0.0f;
+}
+float AUnitBaseCharacter::GetMagDefence() const
+{
+	if (AttributeSetBase)
+	{
+		return AttributeSetBase->GetMagDefence();
+	}
+	return 0.0f;
+}
+float AUnitBaseCharacter::GetAgility() const
+{
+	if (AttributeSetBase)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Agility: %f"), AttributeSetBase->GetAgility()));
+		return AttributeSetBase->GetAgility();
+	}
+	return 0.0f;
+}
+
+
 void AUnitBaseCharacter::Die()
 {
 	if (ASC)

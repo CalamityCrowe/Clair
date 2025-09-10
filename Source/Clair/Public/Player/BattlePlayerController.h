@@ -19,6 +19,8 @@ public:
 
 
 	UBattleHUD* GetBattleHUD() const { return BattleHUD; }
+
+	void CreateBattleHUD();
 protected:
 	virtual void BeginPlay() override;
 

@@ -13,13 +13,15 @@ UAttributeSetBase::UAttributeSetBase()
 void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
-	if (Attribute == GetMaxHealthAttribute()) 
+	TArray<FGameplayAttribute> AttrributesToClamp = { GetStrengthAttribute(),GetMagicAttribute(),GetDefenceAttribute(),GetMagDefenceAttribute(),GetAgilityAttribute() };
+	if (Attribute == GetMaxHealthAttribute() || Attribute == GetMaxManaAttribute())
 	{
-		if(NewValue < 0.0f)
+		if (NewValue < 0.0f)
 		{
 			NewValue = 0.0f;
 		}
 	}
+
 }
 
 void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -30,7 +32,7 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	UAbilitySystemComponent* Source = EffectContext.GetOriginalInstigatorAbilitySystemComponent();
 	const FGameplayTagContainer& SourceTags = *Data.EffectSpec.CapturedTargetTags.GetAggregatedTags();
 	FGameplayTagContainer SpecAssetTags;
-	Data.EffectSpec.GetAllAssetTags(SpecAssetTags); 
+	Data.EffectSpec.GetAllAssetTags(SpecAssetTags);
 
 	AActor* TargetActor = nullptr;
 	AController* TargetController = nullptr;
@@ -85,7 +87,7 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 		const float LocalDamage = GetDamage();
 		SetDamage(0.0f);
 
-		if (LocalDamage > 0.0f) 
+		if (LocalDamage > 0.0f)
 		{
 			bool WasAlive = true;
 
@@ -97,9 +99,9 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			const float NewHealth = GetHealth() - LocalDamage;
 			SetHealth(FMath::Clamp(NewHealth, 0.0f, GetMaxHealth()));
 
-			if (TargetCharacter && WasAlive) 
+			if (TargetCharacter && WasAlive)
 			{
-				
+
 			}
 		}
 	}

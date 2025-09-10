@@ -14,7 +14,7 @@
 
 AClairGamemode::AClairGamemode()
 {
-
+	bStartTurn = true;
 }
 
 void AClairGamemode::BeginPlay()
@@ -24,22 +24,39 @@ void AClairGamemode::BeginPlay()
 	MainBattleCamera = Cast<ATopDownCamera>(UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCamera::StaticClass()));
 	if (MainBattleCamera)
 	{
-		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetViewTargetWithBlend(MainBattleCamera, 2.0f);
+		UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetViewTargetWithBlend(MainBattleCamera, TimerDelay);
+		FTimerHandle TimerHandle;
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]() {
+			TArray<AActor*> FoundUnits;
+			UGameplayStatics::GetAllActorsOfClass(GetWorld(), AUnitBaseCharacter::StaticClass(), FoundUnits);
+			for (AActor* Unit : FoundUnits)
+			{
+				if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(Unit))
+				{
+					PartyUnits.AddUnique(PartyUnit);
+				}
+				else if (AEnemyUnitBase* EnemyUnit = Cast<AEnemyUnitBase>(Unit))
+				{
+					EnemyUnits.AddUnique(EnemyUnit);
+				}
+			}
+
+			if (ABattlePlayerController* PC = Cast<ABattlePlayerController>(UGameplayStatics::GetPlayerController(GetWorld(), 0)))
+			{
+				PC->CreateBattleHUD();
+				if (PC->GetBattleHUD())
+				{
+					for (APartyUnitBase* Unit : PartyUnits)
+					{
+						PC->GetBattleHUD()->AddPartyToHUD(Unit);
+					}
+				}
+			}
+
+			}, TimerDelay, false);
 	}
 
-	TArray<AActor*> FoundUnits;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AUnitBaseCharacter::StaticClass(), FoundUnits);
-	for (AActor* Unit : FoundUnits)
-	{
-		if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(Unit))
-		{
-			PartyUnits.AddUnique(PartyUnit);
-		}
-		else if (AEnemyUnitBase* EnemyUnit = Cast<AEnemyUnitBase>(Unit))
-		{
-			EnemyUnits.AddUnique(EnemyUnit);
-		}
-	}
+
 }
 
 void AClairGamemode::TurnRequest(AUnitBaseCharacter* Unit)

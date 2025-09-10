@@ -9,6 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEnded);
 
 class AUnitBaseCharacter;
+class UActionsWidget;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CLAIR_API UCombatComponent : public UActorComponent
@@ -28,13 +29,25 @@ public:
 	void StartUnitTurn();
 	void EndUnitTurn();
 	void BeginBattle();
+	void RequestTurn(); 
 
 	FOnTurnEnded OnTurnEnded;
+
+	FTimerHandle& GetActionTimer() { return ActionTimer; }
 
 private: 
 
 	TObjectPtr <AUnitBaseCharacter> UnitCharacter;
 		
 	FTransform StartingTransform;
+	FTimerHandle ActionTimer;
 
+	UPROPERTY(EditDefaultsOnly,Category = "UI", meta = (AllowPrivateAccess = true))
+	TSubclassOf<UActionsWidget> ActionWidgetClass;
+	TObjectPtr<UActionsWidget> ActionWidget;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float MaxActionTime = 3.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Combat")
+	float MinActionTime = 1.0f;
 };

@@ -48,4 +48,23 @@ public:
 	FGameplayAttributeData Damage;
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Damage);
 
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	FGameplayAttributeData Strength;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Strength); 
+
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	FGameplayAttributeData Magic;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Magic); 
+
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	FGameplayAttributeData Defence;	
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Defence);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	FGameplayAttributeData MagDefence;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, MagDefence);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Stats")
+	FGameplayAttributeData Agility;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Agility);
 };

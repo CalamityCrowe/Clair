@@ -54,6 +54,19 @@ public:
 	float GetMana() const;
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
 	float GetMaxMana() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetStrength() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetMagic() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetDefence() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetMagDefence() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetAgility() const;
+
+
+
 
 	virtual void Die();
 

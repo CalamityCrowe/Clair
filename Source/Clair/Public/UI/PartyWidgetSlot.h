@@ -58,6 +58,9 @@ protected:
 	UPROPERTY()
 	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
 
+	UFUNCTION(BlueprintPure)
+	float UpdateProgressBar();
+
 	//UPROPERTY(meta = (BindWidget))
 	//UProgressBar* MPBar;
 };

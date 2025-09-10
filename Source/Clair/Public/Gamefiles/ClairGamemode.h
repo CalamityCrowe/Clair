@@ -27,12 +27,17 @@ public:
 
 	void SetupBattleHUD(UBattleHUD* );
 
+	float GetTimerDelay() const { return TimerDelay; }
 private: 
 
 	virtual void StartTurn();
+	UFUNCTION()
 	virtual void ReadyNextTurn();
 
 	bool bStartTurn; 
+
+	UPROPERTY(EditDefaultsOnly, Category = "Timer")
+	float TimerDelay; 
 
 	TArray<AUnitBaseCharacter*> TurnOrder;
 	TArray<TObjectPtr<APartyUnitBase>> PartyUnits;
