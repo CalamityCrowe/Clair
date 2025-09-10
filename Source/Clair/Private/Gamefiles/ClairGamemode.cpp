@@ -8,6 +8,9 @@
 #include "Components/CombatComponent.h"
 #include "Actors/TopDownCamera.h"
 #include "Kismet/GameplayStatics.h"
+#include "Player/BattlePlayerController.h"
+#include "UI/BattleHUD.h"
+
 
 AClairGamemode::AClairGamemode()
 {
@@ -17,6 +20,7 @@ AClairGamemode::AClairGamemode()
 void AClairGamemode::BeginPlay()
 {
 	Super::BeginPlay();
+
 	MainBattleCamera = Cast<ATopDownCamera>(UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCamera::StaticClass()));
 	if (MainBattleCamera)
 	{
@@ -43,6 +47,18 @@ void AClairGamemode::TurnRequest(AUnitBaseCharacter* Unit)
 	TurnOrder.AddUnique(Unit);
 
 	StartTurn();
+}
+
+void AClairGamemode::SetupBattleHUD(UBattleHUD* BHUD)
+{
+	BattleHUD = BHUD;
+	if (BattleHUD)
+	{
+		for (APartyUnitBase* Unit : PartyUnits)
+		{
+			BattleHUD->AddPartyToHUD(Unit);
+		}
+	}
 }
 
 void AClairGamemode::StartTurn()

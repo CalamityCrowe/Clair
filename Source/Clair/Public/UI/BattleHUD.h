@@ -7,7 +7,10 @@
 #include "BattleHUD.generated.h"
 
 class UPartyWidget;
-class APartyUnitBase;
+class UPartyWidgetSlot;
+class AUnitBaseCharacter;
+
+
 /**
  * 
  */
@@ -21,7 +24,10 @@ public:
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
 
-	void AddPartyToHUD(APartyUnitBase* UnitBase);
+	void AddPartyToHUD(AUnitBaseCharacter* UnitBase);
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UPartyWidgetSlot> PartyWidgetSlotClass;
 
 	UPROPERTY(meta = (BindWidget))
 	UPartyWidget* PartyWidget;

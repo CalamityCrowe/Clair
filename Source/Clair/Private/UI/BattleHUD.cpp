@@ -2,6 +2,9 @@
 
 
 #include "UI/BattleHUD.h"
+#include "UI/PartyWidget.h"
+#include "UI/PartyWidgetSlot.h"
+#include "Components/VerticalBox.h"
 
 UBattleHUD::UBattleHUD(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -17,7 +20,12 @@ void UBattleHUD::NativeDestruct()
 	Super::NativeDestruct();
 }
 
-void UBattleHUD::AddPartyToHUD(APartyUnitBase* UnitBase)
+void UBattleHUD::AddPartyToHUD(AUnitBaseCharacter* UnitBase)
 {
-
+	UPartyWidgetSlot* NewSlot = CreateWidget<UPartyWidgetSlot>(GetWorld(),PartyWidgetSlotClass);
+	if (NewSlot)
+	{
+		NewSlot->BindToCharacter(UnitBase);
+	}
+	PartyWidget->PartyBox->AddChildToVerticalBox(NewSlot);
 }

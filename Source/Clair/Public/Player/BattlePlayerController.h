@@ -6,6 +6,7 @@
 #include "GameFramework/PlayerController.h"
 #include "BattlePlayerController.generated.h"
 
+class UBattleHUD;
 /**
  * 
  */
@@ -16,6 +17,15 @@ class CLAIR_API ABattlePlayerController : public APlayerController
 public:
 	ABattlePlayerController();
 
+
+	UBattleHUD* GetBattleHUD() const { return BattleHUD; }
 protected:
 	virtual void BeginPlay() override;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	TSubclassOf<UBattleHUD> BattleHUDClass;
+
+	TObjectPtr<UBattleHUD> BattleHUD;
+
+
 };

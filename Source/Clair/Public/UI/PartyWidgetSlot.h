@@ -10,6 +10,7 @@ class UVerticalBox;
 class UHorizontalBox;
 class UTextBlock;
 class UProgressBar;
+class AUnitBaseCharacter;
 
 /**
  * 
@@ -24,6 +25,10 @@ public:
 	virtual void NativeConstruct() override;
 
 	virtual void NativeDestruct() override;
+
+	void BindToCharacter(AUnitBaseCharacter* Character);
+
+protected: 
 
 	UPROPERTY(meta = (BindWidget))
 	UVerticalBox* MainBox;
@@ -48,6 +53,10 @@ public:
 
 	UPROPERTY(meta = (BindWidget))
 	UProgressBar* TurnBar;
+
+
+	UPROPERTY()
+	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
 
 	//UPROPERTY(meta = (BindWidget))
 	//UProgressBar* MPBar;

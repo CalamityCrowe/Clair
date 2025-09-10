@@ -20,7 +20,6 @@ protected:
 
 private: 
 
-	FText Name; 
 
 
 };

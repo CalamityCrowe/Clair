@@ -6,6 +6,9 @@
 ALuneUnit::ALuneUnit()
 {
 	// Set default properties specific to Lune here
+
+	CharacterName = FText::FromString("Lune");
+
 }
 
 void ALuneUnit::BeginPlay()

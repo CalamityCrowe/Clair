@@ -13,7 +13,7 @@ class AUnitBaseCharacter;
 class APartyUnitBase;
 class AEnemyUnitBase;
 class ATopDownCamera;
-
+class UBattleHUD;
 UCLASS()
 class CLAIR_API AClairGamemode : public AGameModeBase
 {
@@ -24,6 +24,8 @@ public:
 	virtual void BeginPlay() override;
 
 	virtual void TurnRequest(AUnitBaseCharacter* Unit); 
+
+	void SetupBattleHUD(UBattleHUD* );
 
 private: 
 
@@ -36,6 +38,7 @@ private:
 	TArray<TObjectPtr<APartyUnitBase>> PartyUnits;
 	TArray<TObjectPtr<AEnemyUnitBase>> EnemyUnits;
 
+	TObjectPtr<UBattleHUD> BattleHUD;
 
 	ATopDownCamera* MainBattleCamera;
 };
