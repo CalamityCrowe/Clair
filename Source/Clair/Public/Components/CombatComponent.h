@@ -50,4 +50,9 @@ private:
 	float MaxActionTime = 3.0f;
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float MinActionTime = 1.0f;
+
+	UPROPERTY(EditAnywhere, Category = "Camera")
+	float CameraBlendTime = 1.0f;
+
+	void SetCamera(); 
 };

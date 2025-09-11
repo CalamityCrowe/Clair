@@ -6,8 +6,9 @@
 #include "Characters/Party/PartyUnitBase.h"
 #include "Gamefiles/ClairGamemode.h"
 #include "Kismet/KismetMathLibrary.h"
+#include "Kismet/GameplayStatics.h"
 #include "UI/ActionsWidget.h"
-
+#include "Actors/DynamicCamera.h"
 
 UCombatComponent::UCombatComponent()
 {
@@ -41,7 +42,7 @@ void UCombatComponent::BeginPlay()
 void UCombatComponent::StartUnitTurn()
 {
 	// print the unit character's name to the screen for 2 seconds
-	if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(UnitCharacter)) 
+	if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(UnitCharacter))
 	{
 		ActionWidget = CreateWidget<UActionsWidget>(GetWorld(), ActionWidgetClass);
 		if (ActionWidget)
@@ -49,6 +50,7 @@ void UCombatComponent::StartUnitTurn()
 			ActionWidget->AddToViewport();
 			ActionWidget->SetBoundCharacter(PartyUnit);
 		}
+		SetCamera();
 	}
 }
 
@@ -60,7 +62,7 @@ void UCombatComponent::BeginBattle()
 {
 	float Timer = UnitCharacter->GetAgility();
 	Timer = UKismetMathLibrary::NormalizeToRange(Timer, 0.0f, 255.0f);
-	Timer = ((1 - Timer) * (MaxActionTime - MinActionTime) + MinActionTime) ;
+	Timer = ((1 - Timer) * (MaxActionTime - MinActionTime) + MinActionTime);
 
 	GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCombatComponent::RequestTurn, Timer, false);
 }
@@ -69,9 +71,20 @@ void UCombatComponent::RequestTurn()
 {
 	if (AClairGamemode* GM = GetWorld()->GetAuthGameMode<AClairGamemode>())
 	{
-		GM->TurnRequest(UnitCharacter); 
+		GM->TurnRequest(UnitCharacter);
 	}
 
+}
+
+void UCombatComponent::SetCamera()
+{
+	AActor* DynamicCameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ADynamicCamera::StaticClass());
+	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	PC->SetViewTargetWithBlend(DynamicCameraActor,CameraBlendTime);
+	if (ICameraInterface* CameraInterface = Cast<ICameraInterface>(DynamicCameraActor))
+	{
+		CameraInterface->SetCameraLocation(UnitCharacter,StartingTransform.GetLocation());
+	}
 }
 
 
