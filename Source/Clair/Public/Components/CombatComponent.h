@@ -9,7 +9,7 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEnded);
 
 class AUnitBaseCharacter;
-class UActionsWidget;
+class UUnitBattleHUD;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CLAIR_API UCombatComponent : public UActorComponent
@@ -43,8 +43,8 @@ private:
 	FTimerHandle ActionTimer;
 
 	UPROPERTY(EditDefaultsOnly,Category = "UI", meta = (AllowPrivateAccess = true))
-	TSubclassOf<UActionsWidget> ActionWidgetClass;
-	TObjectPtr<UActionsWidget> ActionWidget;
+	TSubclassOf<UUnitBattleHUD> ActionWidgetClass;
+	TObjectPtr<UUnitBattleHUD> ActionWidget;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Combat")
 	float MaxActionTime = 3.0f;

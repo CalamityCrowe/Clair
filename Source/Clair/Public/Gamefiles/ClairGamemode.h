@@ -28,6 +28,10 @@ public:
 	void SetupBattleHUD(UBattleHUD* );
 
 	float GetTimerDelay() const { return TimerDelay; }
+
+	TArray<TObjectPtr<APartyUnitBase>> GetPartyUnits() const { return PartyUnits; }
+	TArray<TObjectPtr<AEnemyUnitBase>> GetEnemyUnits() const { return EnemyUnits; }
+
 private: 
 
 	virtual void StartTurn();

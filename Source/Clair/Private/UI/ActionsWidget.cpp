@@ -4,6 +4,8 @@
 #include "UI/ActionsWidget.h"
 #include "Characters/UnitBaseCharacter.h"
 #include "Components/TextBlock.h"
+#include "Components/Button.h"
+#include "UI/ActionButton.h"
 
 UActionsWidget::UActionsWidget(const FObjectInitializer& ObjectInitializer) : Super(ObjectInitializer)
 {
@@ -13,7 +15,10 @@ UActionsWidget::UActionsWidget(const FObjectInitializer& ObjectInitializer) : Su
 void UActionsWidget::NativeConstruct()
 {
 	Super::NativeConstruct();
-
+	if(AttackCommand)
+	{
+		
+	}
 
 }
 
@@ -29,4 +34,20 @@ void UActionsWidget::SetBoundCharacter(AUnitBaseCharacter* NewCharacter)
 	{
 		NameText->SetText(BoundCharacter->GetCharacterName());
 	}
+}
+
+void UActionsWidget::OnAttackClicked()
+{
+}
+
+void UActionsWidget::OnMagicClicked()
+{
+}
+
+void UActionsWidget::OnSkillClicked()
+{
+}
+
+void UActionsWidget::OnItemClicked()
+{
 }

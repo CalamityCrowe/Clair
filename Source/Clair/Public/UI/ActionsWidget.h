@@ -29,6 +29,8 @@ public:
 
 	void SetBoundCharacter(AUnitBaseCharacter* NewCharacter);
 
+	TObjectPtr<UActionButton> GetAttackCommand() const { return AttackCommand; }
+
 protected:
 
 	UPROPERTY(meta = (BindWidget))
@@ -49,4 +51,14 @@ protected:
 	TObjectPtr<UActionButton> ItemCommand;
 
 	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
+
+private: 
+	UFUNCTION()
+	void OnAttackClicked();
+	UFUNCTION()
+	void OnMagicClicked();
+	UFUNCTION()
+	void OnSkillClicked();
+	UFUNCTION()
+	void OnItemClicked();
 };

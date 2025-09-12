@@ -13,8 +13,14 @@ UActionButton::UActionButton(const FObjectInitializer& ObjectInitializer) : Supe
 void UActionButton::NativeConstruct()
 {
 	Super::NativeConstruct();
+	ActionButton->OnClicked.AddDynamic(this, &UActionButton::OnActionClicked);
 }
 void UActionButton::NativeDestruct()
 {
 	Super::NativeDestruct();
+}
+
+void UActionButton::OnActionClicked()
+{
+	ActionDelegateHandle.Broadcast();
 }

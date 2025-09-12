@@ -7,7 +7,7 @@
 #include "Gamefiles/ClairGamemode.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "UI/ActionsWidget.h"
+#include "UI/UnitBattleHUD.h"
 #include "Actors/DynamicCamera.h"
 
 UCombatComponent::UCombatComponent()
@@ -15,7 +15,7 @@ UCombatComponent::UCombatComponent()
 
 	PrimaryComponentTick.bCanEverTick = true;
 
-	static ConstructorHelpers::FClassFinder<UUserWidget> ActionWidgetBPClass(TEXT("/Game/UI/WBP_Actions"));
+	static ConstructorHelpers::FClassFinder<UUserWidget> ActionWidgetBPClass(TEXT("/Game/UI/WBP_UnitBattleHUD"));
 	if (ActionWidgetBPClass.Class != nullptr)
 	{
 		ActionWidgetClass = ActionWidgetBPClass.Class;
@@ -44,7 +44,7 @@ void UCombatComponent::StartUnitTurn()
 	// print the unit character's name to the screen for 2 seconds
 	if (APartyUnitBase* PartyUnit = Cast<APartyUnitBase>(UnitCharacter))
 	{
-		ActionWidget = CreateWidget<UActionsWidget>(GetWorld(), ActionWidgetClass);
+		ActionWidget = CreateWidget<UUnitBattleHUD>(GetWorld(), ActionWidgetClass);
 		if (ActionWidget)
 		{
 			ActionWidget->AddToViewport();

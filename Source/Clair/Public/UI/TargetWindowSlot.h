@@ -4,35 +4,33 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "ActionButton.generated.h"
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FActionDelegate);
-
+#include "TargetWindowSlot.generated.h"
 
 /**
  * 
  */
-class UButton;
+
+class UButton; 
 class UTextBlock;
+class AUnitBaseCharacter;
 
 UCLASS()
-class CLAIR_API UActionButton : public UUserWidget
+class CLAIR_API UTargetWindowSlot : public UUserWidget
 {
 	GENERATED_UCLASS_BODY()
 public: 
-	UActionButton();
+	UTargetWindowSlot();
 
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
+	
+	void SetBoundCharacter(AUnitBaseCharacter* NewCharacter); 
 
-	FActionDelegate ActionDelegateHandle;
-
-protected:
+protected: 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UButton> ActionButton;
+	TObjectPtr<UButton> SlotButton;
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UTextBlock> ActionText;
+	TObjectPtr<UTextBlock> SlotText;
 
-	UFUNCTION()
-	void OnActionClicked();
+	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
 };
