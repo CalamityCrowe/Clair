@@ -15,6 +15,9 @@ class AUnitBaseCharacter;
 class UTargetWindowSlot;
 
 class UActionButton;
+
+
+
 /**
  * 
  */
@@ -27,6 +30,8 @@ public:
 
 	virtual void NativeConstruct() override;
 	virtual void NativeDestruct() override;
+
+	void SetBoundCharacter(class AUnitBaseCharacter* NewCharacter);
 
 	void PopulateTargetList();
 
@@ -49,5 +54,8 @@ protected:
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UActionButton> BackButton;
-
+private: 
+	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
+	UFUNCTION()
+	void SetTarget(AUnitBaseCharacter* Target);
 };

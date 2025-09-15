@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 using UnrealBuildTool;
+using UnrealBuildTool.Rules;
 
 public class Clair : ModuleRules
 {
@@ -24,7 +25,11 @@ public class Clair : ModuleRules
             "GameplayAbilities",
             "GameplayTags",
             "GameplayTasks",
-            "Niagara"
+            "Niagara",
+            "AIModule",
+            "NavigationSystem"
+
+
         });
 
         // Uncomment if you are using Slate UI

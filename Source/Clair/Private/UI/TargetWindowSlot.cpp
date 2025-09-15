@@ -13,6 +13,10 @@ UTargetWindowSlot::UTargetWindowSlot(const FObjectInitializer& ObjectInitializer
 void UTargetWindowSlot::NativeConstruct()
 {
 	Super::NativeConstruct();
+	if (SlotButton)
+	{
+		SlotButton->OnClicked.AddDynamic(this, &UTargetWindowSlot::OnSlotClicked);
+	}
 }
 
 void UTargetWindowSlot::NativeDestruct()
@@ -27,4 +31,9 @@ void UTargetWindowSlot::SetBoundCharacter(AUnitBaseCharacter* NewCharacter)
 	{
 		SlotText->SetText(BoundCharacter->GetCharacterName());
 	}
+}
+
+void UTargetWindowSlot::OnSlotClicked()
+{
+	TargetChosen.Broadcast(BoundCharacter);
 }

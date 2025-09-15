@@ -27,6 +27,8 @@ public:
 
 	void SetBoundCharacter(class AUnitBaseCharacter* NewCharacter);
 protected: 
+	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
+
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UActionsWidget> ActionsCommands;
 	UPROPERTY(meta = (BindWidget))

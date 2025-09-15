@@ -135,6 +135,13 @@ void AUnitBaseCharacter::BeginPlay()
 		SetHealth(GetMaxHealth());
 		SetMana(GetMaxMana());
 	}
+
+	// want to check if it has an anim instance and store it
+	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance()) 
+	{
+		AnimInstance->OnMontageBlendingOut.AddDynamic(this, &AUnitBaseCharacter::OnAttackMontageEnded);
+	}
+	
 }
 
 void AUnitBaseCharacter::AddCharacterAbilities()
@@ -200,6 +207,22 @@ void AUnitBaseCharacter::SetMana(float NewMana)
 	if (AttributeSetBase)
 	{
 		AttributeSetBase->SetMana(NewMana);
+	}
+}
+
+void AUnitBaseCharacter::PlayAttackMontage()
+{
+	if (AttackMontage)
+	{
+		PlayAnimMontage(AttackMontage);
+	}
+}
+
+void AUnitBaseCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
+{
+	if (Montage == AttackMontage)
+	{
+		CombatComponent->ReturnToStart();
 	}
 }
 

@@ -9,6 +9,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "UI/UnitBattleHUD.h"
 #include "Actors/DynamicCamera.h"
+#include "Controllers/BattleAIController.h"
 
 UCombatComponent::UCombatComponent()
 {
@@ -31,6 +32,10 @@ void UCombatComponent::BeginPlay()
 
 	UnitCharacter = Cast<AUnitBaseCharacter>(GetOwner());
 	StartingTransform = GetOwner()->GetActorTransform();
+
+	if (BattleController = Cast<ABattleAIController>(UnitCharacter->GetController()))
+	{
+	}
 
 	FTimerHandle TimerHandle;
 	float GMDelay = GetWorld()->GetAuthGameMode<AClairGamemode>()->GetTimerDelay();
@@ -56,6 +61,8 @@ void UCombatComponent::StartUnitTurn()
 
 void UCombatComponent::EndUnitTurn()
 {
+	OnTurnEnded.Broadcast();
+	BeginBattle();
 }
 
 void UCombatComponent::BeginBattle()
@@ -76,15 +83,69 @@ void UCombatComponent::RequestTurn()
 
 }
 
+void UCombatComponent::AttackCommand()
+{
+	if (bIsRanged)
+	{
+		RangedAttack();
+	}
+	else
+	{
+		MeleeAttack();
+	}
+}
+
+void UCombatComponent::ReturnToStart()
+{
+
+	BattleController->MoveToLocation(StartingTransform.GetLocation(), 1);
+	BattleController->MoveToStartDelegate.AddDynamic(this, &UCombatComponent::ResetRotation);
+}
+
 void UCombatComponent::SetCamera()
 {
 	AActor* DynamicCameraActor = UGameplayStatics::GetActorOfClass(GetWorld(), ADynamicCamera::StaticClass());
 	APlayerController* PC = UGameplayStatics::GetPlayerController(GetWorld(), 0);
-	PC->SetViewTargetWithBlend(DynamicCameraActor,CameraBlendTime);
+	PC->SetViewTargetWithBlend(DynamicCameraActor, CameraBlendTime);
 	if (ICameraInterface* CameraInterface = Cast<ICameraInterface>(DynamicCameraActor))
 	{
-		CameraInterface->SetCameraLocation(UnitCharacter,StartingTransform.GetLocation());
+		CameraInterface->SetCameraLocation(UnitCharacter, StartingTransform.GetLocation());
 	}
 }
 
+void UCombatComponent::MeleeAttack()
+{
+	if (BattleController)
+	{
+		BattleController->MoveToActor(UnitTarget, 100.f);
+
+		BattleController->MoveToAttackDelegate.AddDynamic(this, &UCombatComponent::MovementComplete);
+
+		if (ActionWidget)
+		{
+			ActionWidget->RemoveFromParent();
+		}
+	}
+
+}
+
+void UCombatComponent::RangedAttack()
+{
+}
+
+void UCombatComponent::MovementComplete()
+{
+	UnitCharacter->PlayAttackMontage();
+}
+
+
+void UCombatComponent::ResetRotation()
+{
+	UnitCharacter->SetActorRotation(StartingTransform.GetRotation());
+	FTimerHandle TimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
+		{
+			EndUnitTurn();
+		}, 1.0f, false);
+}
 

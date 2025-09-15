@@ -101,10 +101,17 @@ protected:
 
 public:	
 
+	void PlayAttackMontage();
 
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; }
 private: 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UCombatComponent> CombatComponent;
+
+	UPROPERTY(EditAnywhere, Category = "Animation")
+	TObjectPtr<UAnimMontage> AttackMontage;
+
+	UFUNCTION()
+	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);
 };

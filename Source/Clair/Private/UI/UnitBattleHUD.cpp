@@ -23,9 +23,14 @@ void UUnitBattleHUD::NativeDestruct()
 
 void UUnitBattleHUD::SetBoundCharacter(AUnitBaseCharacter* NewCharacter)
 {
+	BoundCharacter = NewCharacter;
 	if (ActionsCommands)
 	{
 		ActionsCommands->SetBoundCharacter(NewCharacter);
+	}
+	if (TargetWindow)
+	{
+		TargetWindow->SetBoundCharacter(NewCharacter);
 	}
 }
 

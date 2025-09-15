@@ -7,6 +7,7 @@
 #include "Components/Border.h"
 #include "Components/TextBlock.h"
 #include "Components/ScrollBox.h"
+#include "Components/CombatComponent.h"
 #include "Gamefiles/ClairGamemode.h"
 #include "Characters/Enemy/EnemyUnitBase.h"
 #include "UI/TargetWindowSlot.h"
@@ -25,6 +26,14 @@ void UTargetWindow::NativeDestruct()
 	Super::NativeDestruct();
 }
 
+void UTargetWindow::SetBoundCharacter(AUnitBaseCharacter* NewCharacter)
+{
+	if(NewCharacter)
+	{
+		BoundCharacter = NewCharacter;
+	}
+}
+
 void UTargetWindow::PopulateTargetList()
 {
 	TargetsList->ClearChildren();
@@ -37,8 +46,22 @@ void UTargetWindow::PopulateTargetList()
 			if (NewSlot)
 			{
 				NewSlot->SetBoundCharacter(Enemy);
+				NewSlot->TargetChosen.AddDynamic(this, &UTargetWindow::SetTarget);
 				TargetsList->AddChild(NewSlot);
 			}
+		}
+	}
+}
+
+void UTargetWindow::SetTarget(AUnitBaseCharacter* Target)
+{
+	if(Target)
+	{
+		if(BoundCharacter)
+		{
+			BoundCharacter->GetCombatComponent()->SetTarget(Target);
+
+			BoundCharacter->GetCombatComponent()->AttackCommand();
 		}
 	}
 }

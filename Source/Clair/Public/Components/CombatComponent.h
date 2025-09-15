@@ -10,6 +10,8 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnTurnEnded);
 
 class AUnitBaseCharacter;
 class UUnitBattleHUD;
+class ABattleAIController;
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class CLAIR_API UCombatComponent : public UActorComponent
@@ -31,16 +33,26 @@ public:
 	void BeginBattle();
 	void RequestTurn(); 
 
+	void AttackCommand(); 
+	void ReturnToStart();
+
+
 	FOnTurnEnded OnTurnEnded;
 
 	FTimerHandle& GetActionTimer() { return ActionTimer; }
 
+	void SetTarget(AUnitBaseCharacter* NewTarget) { UnitTarget = NewTarget; }
+
 private: 
 
 	TObjectPtr <AUnitBaseCharacter> UnitCharacter;
+	TObjectPtr <AUnitBaseCharacter> UnitTarget;
+	TObjectPtr<ABattleAIController> BattleController;
 		
 	FTransform StartingTransform;
 	FTimerHandle ActionTimer;
+
+	bool bIsRanged; 
 
 	UPROPERTY(EditDefaultsOnly,Category = "UI", meta = (AllowPrivateAccess = true))
 	TSubclassOf<UUnitBattleHUD> ActionWidgetClass;
@@ -55,4 +67,12 @@ private:
 	float CameraBlendTime = 1.0f;
 
 	void SetCamera(); 
+
+	void MeleeAttack(); 
+	void RangedAttack();
+
+	UFUNCTION()
+	void MovementComplete();
+	UFUNCTION()
+	void ResetRotation(); 
 };

@@ -10,6 +10,11 @@
  * 
  */
 
+class AUnitBaseCharacter;
+
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetChosen,AUnitBaseCharacter*, Unit);
+
 class UButton; 
 class UTextBlock;
 class AUnitBaseCharacter;
@@ -26,6 +31,8 @@ public:
 	
 	void SetBoundCharacter(AUnitBaseCharacter* NewCharacter); 
 
+	FOnTargetChosen TargetChosen; 
+
 protected: 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<UButton> SlotButton;
@@ -33,4 +40,7 @@ protected:
 	TObjectPtr<UTextBlock> SlotText;
 
 	TObjectPtr<AUnitBaseCharacter> BoundCharacter;
+
+	UFUNCTION()
+	void OnSlotClicked();
 };
