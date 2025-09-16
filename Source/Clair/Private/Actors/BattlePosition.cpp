@@ -30,7 +30,7 @@ void ABattlePosition::SpawnUnit()
 	if(UnitClass)
 	{
 		FActorSpawnParameters SpawnParams;
-		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 		GetWorld()->SpawnActor<AUnitBaseCharacter>(UnitClass, GetActorTransform(), SpawnParams);
 	}
 	else
