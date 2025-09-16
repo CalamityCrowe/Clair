@@ -48,23 +48,53 @@ public:
 	FGameplayAttributeData Damage;
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Damage);
 
-	UPROPERTY(BlueprintReadOnly, Category = "Stats")
-	FGameplayAttributeData Strength;
-	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Strength); 
+    // Speed
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Speed;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Speed);
+
+    // Strength
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Strength;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Strength);
+
+    // Magic
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Magic;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Magic);
+
+    // Spirit
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Spirit;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Spirit);
+
+    // Attack
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Attack;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Attack);
+
+    // Defense
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Defense;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Defense);
+
+    // Evade
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData Evade;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, Evade);
+
+    // Magic Defense
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData MagDef;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, MagDef);
+
+    // Magic Evasion
+    UPROPERTY(BlueprintReadOnly, Category = "Stats")
+    FGameplayAttributeData MagEva;
+    ATTRIBUTE_ACCESSORS(UAttributeSetBase, MagEva);
 
 	UPROPERTY(BlueprintReadOnly, Category = "Stats")
-	FGameplayAttributeData Magic;
-	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Magic); 
+	FGameplayAttributeData ATBTick;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, ATBTick);
 
-	UPROPERTY(BlueprintReadOnly, Category = "Stats")
-	FGameplayAttributeData Defence;	
-	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Defence);
-
-	UPROPERTY(BlueprintReadOnly, Category = "Stats")
-	FGameplayAttributeData MagDefence;
-	ATTRIBUTE_ACCESSORS(UAttributeSetBase, MagDefence);
-
-	UPROPERTY(BlueprintReadOnly, Category = "Stats")
-	FGameplayAttributeData Agility;
-	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Agility);
 };

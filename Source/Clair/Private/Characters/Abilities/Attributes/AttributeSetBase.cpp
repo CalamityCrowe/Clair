@@ -13,7 +13,6 @@ UAttributeSetBase::UAttributeSetBase()
 void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, float& NewValue)
 {
 	Super::PreAttributeChange(Attribute, NewValue);
-	TArray<FGameplayAttribute> AttrributesToClamp = { GetStrengthAttribute(),GetMagicAttribute(),GetDefenceAttribute(),GetMagDefenceAttribute(),GetAgilityAttribute() };
 	if (Attribute == GetMaxHealthAttribute() || Attribute == GetMaxManaAttribute())
 	{
 		if (NewValue < 0.0f)
@@ -21,7 +20,18 @@ void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, 
 			NewValue = 0.0f;
 		}
 	}
-
+	else if (Attribute == GetSpeedAttribute()) 
+	{
+		NewValue = FMath::Clamp(NewValue, 0.0f, 59.0f);
+	}
+	else if (Attribute == GetStrengthAttribute() || Attribute == GetDefenseAttribute() || Attribute == GetMagicAttribute() || Attribute == GetMagDefAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 0.0f, 99.0f);
+	}
+	else if(Attribute == GetATBTickAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 5.0f,24.0f);
+	}
 }
 
 void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)

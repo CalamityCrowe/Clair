@@ -85,28 +85,37 @@ float AUnitBaseCharacter::GetMagic() const
 	}
 	return 0.0f;
 }
-float AUnitBaseCharacter::GetDefence() const
+float AUnitBaseCharacter::GetDefense() const
 {
 	if (AttributeSetBase)
 	{
-		return AttributeSetBase->GetDefence();
+		return AttributeSetBase->GetDefense();
 	}
 	return 0.0f;
 }
-float AUnitBaseCharacter::GetMagDefence() const
+float AUnitBaseCharacter::GetMagDef() const
 {
 	if (AttributeSetBase)
 	{
-		return AttributeSetBase->GetMagDefence();
+		return AttributeSetBase->GetMagDef();
 	}
 	return 0.0f;
 }
-float AUnitBaseCharacter::GetAgility() const
+float AUnitBaseCharacter::GetSpeed() const
 {
 	if (AttributeSetBase)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Agility: %f"), AttributeSetBase->GetAgility()));
-		return AttributeSetBase->GetAgility();
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Agility: %f"), AttributeSetBase->GetSpeed()));
+		return AttributeSetBase->GetSpeed();
+	}
+	return 0.0f;
+}
+
+float AUnitBaseCharacter::GetATBTick() const
+{
+	if (AttributeSetBase)
+	{
+		return AttributeSetBase->GetATBTick();
 	}
 	return 0.0f;
 }

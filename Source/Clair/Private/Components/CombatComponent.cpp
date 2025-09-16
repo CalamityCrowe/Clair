@@ -67,11 +67,10 @@ void UCombatComponent::EndUnitTurn()
 
 void UCombatComponent::BeginBattle()
 {
-	float Timer = UnitCharacter->GetAgility();
-	Timer = UKismetMathLibrary::NormalizeToRange(Timer, 0.0f, 255.0f);
-	Timer = ((1 - Timer) * (MaxActionTime - MinActionTime) + MinActionTime);
-
-	GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCombatComponent::RequestTurn, Timer, false);
+	float Speed = UnitCharacter->GetSpeed();
+	float ATB = UnitCharacter->GetATBTick();
+	float Time = (((60 - Speed) * 160)/ATB)/60 ; 
+	GetWorld()->GetTimerManager().SetTimer(ActionTimer, this, &UCombatComponent::RequestTurn, Time, false);
 }
 
 void UCombatComponent::RequestTurn()

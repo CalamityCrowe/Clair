@@ -23,7 +23,6 @@ void APartyUnitBase::BeginPlay()
 void APartyUnitBase::IntializeAttributes()
 {
 	// this is where we will initialize the attributes from the data table
-	Super::IntializeAttributes();
 	if (!ASC || !PartyUnitDataTable) return; 
 	FName RowName = *CharacterName.ToString();
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("Row Name: %s"), *RowName.ToString()));

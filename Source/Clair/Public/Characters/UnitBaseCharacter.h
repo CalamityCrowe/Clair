@@ -59,12 +59,13 @@ public:
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
 	float GetMagic() const;
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
-	float GetDefence() const;
+	float GetDefense() const;
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
-	float GetMagDefence() const;
+	float GetMagDef() const;
 	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
-	float GetAgility() const;
-
+	float GetSpeed() const;
+	UFUNCTION(BlueprintPure, Category = "GAS|GASCharacter|Attributes")
+	float GetATBTick() const;
 
 
 
