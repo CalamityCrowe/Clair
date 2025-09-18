@@ -87,7 +87,9 @@ void AClairGamemode::StartTurn()
 			TurnOrder[0]->GetCombatComponent()->StartUnitTurn();
 			bStartTurn = false;
 			// bind to end turn event
+			if (!TurnOrder[0]->GetCombatComponent()->OnTurnEnded.IsAlreadyBound(this, &AClairGamemode::ReadyNextTurn))
 			TurnOrder[0]->GetCombatComponent()->OnTurnEnded.AddDynamic(this, &AClairGamemode::ReadyNextTurn);
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Starting Turn for %s"), *TurnOrder[0]->GetName()));
 			TurnOrder.RemoveAt(0);
 			bStartTurn = false;
 		}
@@ -104,5 +106,9 @@ void AClairGamemode::StartTurn()
 
 void AClairGamemode::ReadyNextTurn()
 {
-
+	bStartTurn = true;
+	if (TurnOrder.IsValidIndex(0))
+	{
+		StartTurn();
+	}
 }

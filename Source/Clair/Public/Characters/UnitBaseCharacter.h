@@ -10,6 +10,7 @@
 #include "UnitBaseCharacter.generated.h"
 
 class UCombatComponent;
+class UMeleeComponent;
 class UClairAbilitySystemComponent;
 class UAttributeSetBase;
 class UGameplayEffect;
@@ -103,15 +104,18 @@ protected:
 public:	
 
 	void PlayAttackMontage();
-
+	void PlayHitReactMontage();
 	UCombatComponent* GetCombatComponent() const { return CombatComponent; }
+	UMeleeComponent* GetMeleeComponent() const { return MeleeComponent; }
 private: 
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
 	TObjectPtr<UCombatComponent> CombatComponent;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = true))
+	TObjectPtr<UMeleeComponent> MeleeComponent;
 
 	UPROPERTY(EditAnywhere, Category = "Animation")
-	TObjectPtr<UAnimMontage> AttackMontage;
+	TObjectPtr<UAnimMontage> HitReactMontage;
 
 	UFUNCTION()
 	void OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted);

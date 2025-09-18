@@ -97,4 +97,11 @@ public:
 	FGameplayAttributeData ATBTick;
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, ATBTick);
 
+    UPROPERTY(BlueprintReadOnly, Category = "Level")
+	FGameplayAttributeData Exp;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Exp);
+
+	UPROPERTY(BlueprintReadOnly, Category = "Level")
+	FGameplayAttributeData Level;
+	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Level);
 };

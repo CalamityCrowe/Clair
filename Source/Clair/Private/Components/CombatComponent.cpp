@@ -144,6 +144,7 @@ void UCombatComponent::ResetRotation()
 	FTimerHandle TimerHandle;
 	GetWorld()->GetTimerManager().SetTimer(TimerHandle, [this]()
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, FString::Printf(TEXT("Turn Ended")));
 			EndUnitTurn();
 		}, 1.0f, false);
 }

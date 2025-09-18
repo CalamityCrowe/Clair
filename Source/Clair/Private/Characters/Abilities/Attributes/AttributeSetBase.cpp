@@ -32,6 +32,10 @@ void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	{
 		NewValue = FMath::Clamp(NewValue, 5.0f,24.0f);
 	}
+	else if (Attribute == GetLevelAttribute())
+	{
+		NewValue = FMath::Clamp(NewValue, 1.0f, 99.0f);
+	}
 }
 
 void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
@@ -112,6 +116,8 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 			if (TargetCharacter && WasAlive)
 			{
 
+					TargetCharacter->PlayHitReactMontage(); //play the hit react montage
+				
 			}
 		}
 	}

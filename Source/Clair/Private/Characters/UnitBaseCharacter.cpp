@@ -3,6 +3,7 @@
 
 #include "Characters/UnitBaseCharacter.h"
 #include "Components/CombatComponent.h"
+#include "Components/MeleeComponent.h"
 #include "Characters/Abilities/ClairAbilitySystemComponent.h"
 #include "Characters/Abilities/Attributes/AttributeSetBase.h"
 // Sets default values
@@ -15,6 +16,8 @@ AUnitBaseCharacter::AUnitBaseCharacter()
 
 	ASC = CreateDefaultSubobject<UClairAbilitySystemComponent>(TEXT("AbilitySystemComponent"));
 	AttributeSetBase = CreateDefaultSubobject<UAttributeSetBase>(TEXT("AttributeSetBase"));
+	MeleeComponent = CreateDefaultSubobject<UMeleeComponent>(TEXT("MeleeComponent"));
+
 
 }
 
@@ -137,20 +140,20 @@ void AUnitBaseCharacter::FinishDying()
 void AUnitBaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	if (ASC) 
+	if (ASC)
 	{
 		ASC->InitAbilityActorInfo(this, this);
-		IntializeAttributes(); 
+		IntializeAttributes();
 		SetHealth(GetMaxHealth());
 		SetMana(GetMaxMana());
 	}
 
 	// want to check if it has an anim instance and store it
-	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance()) 
+	if (UAnimInstance* AnimInstance = GetMesh()->GetAnimInstance())
 	{
 		AnimInstance->OnMontageBlendingOut.AddDynamic(this, &AUnitBaseCharacter::OnAttackMontageEnded);
 	}
-	
+
 }
 
 void AUnitBaseCharacter::AddCharacterAbilities()
@@ -179,7 +182,7 @@ void AUnitBaseCharacter::IntializeAttributes()
 	{
 		return;
 	}
-	
+
 	if (CharacterConfig->DefaultAttributes.IsEmpty())
 	{
 		UE_LOG(LogTemp, Warning, TEXT("DefaultAttributes is not set for %s"), *GetName());
@@ -197,10 +200,13 @@ void AUnitBaseCharacter::IntializeAttributes()
 			FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(DefaultAttribute, 1, EffectContext);
 			if (EffectSpecHandle.IsValid())
 			{
+				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Initialized Attributes for %s"), *GetName()));
+
 				FActiveGameplayEffectHandle ActiveGEHandle = ASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 			}
 		}
 	}
+	// print what character this is in but blue
 }
 
 void AUnitBaseCharacter::SetHealth(float NewHealth)
@@ -221,15 +227,23 @@ void AUnitBaseCharacter::SetMana(float NewMana)
 
 void AUnitBaseCharacter::PlayAttackMontage()
 {
-	if (AttackMontage)
+	if (MeleeComponent)
 	{
-		PlayAnimMontage(AttackMontage);
+		MeleeComponent->Attack();
+	}
+}
+
+void AUnitBaseCharacter::PlayHitReactMontage()
+{
+	if (HitReactMontage)
+	{
+		PlayAnimMontage(HitReactMontage);
 	}
 }
 
 void AUnitBaseCharacter::OnAttackMontageEnded(UAnimMontage* Montage, bool bInterrupted)
 {
-	if (Montage == AttackMontage)
+	if (Montage == MeleeComponent->GetCurrentMontage())
 	{
 		CombatComponent->ReturnToStart();
 	}
