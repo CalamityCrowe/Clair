@@ -108,7 +108,6 @@ float AUnitBaseCharacter::GetSpeed() const
 {
 	if (AttributeSetBase)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Agility: %f"), AttributeSetBase->GetSpeed()));
 		return AttributeSetBase->GetSpeed();
 	}
 	return 0.0f;
@@ -200,8 +199,6 @@ void AUnitBaseCharacter::IntializeAttributes()
 			FGameplayEffectSpecHandle EffectSpecHandle = ASC->MakeOutgoingSpec(DefaultAttribute, 1, EffectContext);
 			if (EffectSpecHandle.IsValid())
 			{
-				GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, FString::Printf(TEXT("Initialized Attributes for %s"), *GetName()));
-
 				FActiveGameplayEffectHandle ActiveGEHandle = ASC->ApplyGameplayEffectSpecToSelf(*EffectSpecHandle.Data.Get());
 			}
 		}

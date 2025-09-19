@@ -104,4 +104,6 @@ public:
 	UPROPERTY(BlueprintReadOnly, Category = "Level")
 	FGameplayAttributeData Level;
 	ATTRIBUTE_ACCESSORS(UAttributeSetBase, Level);
+
+
 };

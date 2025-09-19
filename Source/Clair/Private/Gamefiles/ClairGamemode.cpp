@@ -21,6 +21,11 @@ void AClairGamemode::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (BattleMusic)
+	{
+		UGameplayStatics::PlaySound2D(GetWorld(), BattleMusic);
+	}
+
 	MainBattleCamera = Cast<ATopDownCamera>(UGameplayStatics::GetActorOfClass(GetWorld(), ATopDownCamera::StaticClass()));
 	if (MainBattleCamera)
 	{
@@ -89,7 +94,6 @@ void AClairGamemode::StartTurn()
 			// bind to end turn event
 			if (!TurnOrder[0]->GetCombatComponent()->OnTurnEnded.IsAlreadyBound(this, &AClairGamemode::ReadyNextTurn))
 			TurnOrder[0]->GetCombatComponent()->OnTurnEnded.AddDynamic(this, &AClairGamemode::ReadyNextTurn);
-			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Green, FString::Printf(TEXT("Starting Turn for %s"), *TurnOrder[0]->GetName()));
 			TurnOrder.RemoveAt(0);
 			bStartTurn = false;
 		}

@@ -90,6 +90,8 @@ void UPhysicalDamageExecCalculation::Execute_Implementation(const FGameplayEffec
 	float Bonus = Strength + FMath::RandHelper(FMath::Floor((Level + Strength) / 8) + 1); 
 	float TotalDamage = BaseDamage * Bonus; 
 
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, FString::Printf(TEXT("Physical Damage Dealt: %f"), TotalDamage));
+
 	OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(DamageStatics().DamageDef.AttributeToCapture, EGameplayModOp::Additive, TotalDamage));
 
 	UClairAbilitySystemComponent* TargetASC = Cast<UClairAbilitySystemComponent>(TargetAbilitySystemComponent);

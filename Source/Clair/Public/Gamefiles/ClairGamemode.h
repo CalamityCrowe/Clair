@@ -43,6 +43,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Timer")
 	float TimerDelay; 
 
+	UPROPERTY(EditAnywhere, Category = "Music")
+	TObjectPtr<USoundBase> BattleMusic;
+
+
 	TArray<AUnitBaseCharacter*> TurnOrder;
 	TArray<TObjectPtr<APartyUnitBase>> PartyUnits;
 	TArray<TObjectPtr<AEnemyUnitBase>> EnemyUnits;

@@ -13,9 +13,7 @@ void APartyUnitBase::BeginPlay()
 	Super::BeginPlay();
 	if(ASC)
 	{
-		IntializeAttributes(); 
-		SetHealth(GetMaxHealth()); 
-		SetMana(GetMaxMana()); 
+
 	}
 
 }
