@@ -70,7 +70,7 @@ void UActionButton::OnUnhovered()
 void UActionButton::HoveredFill()
 {
 
-	Elapsed += bIsFilling? 0.025:-0.02;
+	Elapsed += bIsFilling? 0.05:-0.02;
 	float Alpha = FMath::Clamp(Elapsed / Duration, 0, 1);
 	CurrentFill = FMath::Lerp(MaxFill, 2, Alpha);
 	ButtonMaterial->SetScalarParameterValue(FName("Fill"), CurrentFill);

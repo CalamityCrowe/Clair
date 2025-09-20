@@ -43,4 +43,22 @@ protected:
 
 	UFUNCTION()
 	void OnSlotClicked();
+	UFUNCTION()
+	void OnHovered(); 
+	UFUNCTION()
+	void OnUnhovered();
+
+private:
+	TObjectPtr<UMaterialInstanceDynamic> ButtonMaterial;
+	FButtonStyle ButtonStyle;
+	FTimerHandle FillTimerHandle;
+
+	float MaxFill;
+	float CurrentFill;
+	float MinFill;
+	float Duration;
+	float Elapsed;
+	bool bIsFilling;
+
+	void HoveredFill();
 };
