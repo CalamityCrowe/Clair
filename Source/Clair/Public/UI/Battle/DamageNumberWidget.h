@@ -30,7 +30,7 @@ protected:
 	TObjectPtr<UTextBlock> DamageText;
 
 	UPROPERTY(meta = (BindWidget))
-	TObjectPtr<UOverlay> CriticalOverlay;
+	TObjectPtr<UOverlay> DamageOverlay;
 
 	UPROPERTY(meta = (BindWidget))
 	TObjectPtr<URetainerBox> RetainerBox;

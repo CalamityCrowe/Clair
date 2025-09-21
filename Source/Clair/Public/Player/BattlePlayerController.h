@@ -17,7 +17,6 @@ class CLAIR_API ABattlePlayerController : public APlayerController
 public:
 	ABattlePlayerController();
 
-
 	UBattleHUD* GetBattleHUD() const { return BattleHUD; }
 
 	void CreateBattleHUD();

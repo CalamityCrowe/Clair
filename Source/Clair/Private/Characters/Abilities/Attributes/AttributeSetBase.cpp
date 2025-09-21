@@ -5,6 +5,7 @@
 #include "GameplayEffect.h"
 #include "GameplayEffectExtension.h"
 #include "Characters/UnitBaseCharacter.h"
+#include "Controllers/BattleAIController.h"
 
 UAttributeSetBase::UAttributeSetBase()
 {
@@ -20,7 +21,7 @@ void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, 
 			NewValue = 0.0f;
 		}
 	}
-	else if (Attribute == GetSpeedAttribute()) 
+	else if (Attribute == GetSpeedAttribute())
 	{
 		NewValue = FMath::Clamp(NewValue, 0.0f, 59.0f);
 	}
@@ -28,9 +29,9 @@ void UAttributeSetBase::PreAttributeChange(const FGameplayAttribute& Attribute, 
 	{
 		NewValue = FMath::Clamp(NewValue, 0.0f, 99.0f);
 	}
-	else if(Attribute == GetATBTickAttribute())
+	else if (Attribute == GetATBTickAttribute())
 	{
-		NewValue = FMath::Clamp(NewValue, 5.0f,24.0f);
+		NewValue = FMath::Clamp(NewValue, 5.0f, 24.0f);
 	}
 	else if (Attribute == GetLevelAttribute())
 	{
@@ -115,9 +116,16 @@ void UAttributeSetBase::PostGameplayEffectExecute(const FGameplayEffectModCallba
 
 			if (TargetCharacter && WasAlive)
 			{
+				TargetCharacter->PlayHitReactMontage(); //play the hit react montage
 
-					TargetCharacter->PlayHitReactMontage(); //play the hit react montage
-				
+				if (SourceActor != TargetActor) 
+				{
+					ABattleAIController* Cont = Cast<ABattleAIController>(SourceController);
+					if(Cont)
+					{
+						Cont->ShowDamageNumber(LocalDamage, false, false,TargetCharacter);
+					}
+				}
 			}
 		}
 	}

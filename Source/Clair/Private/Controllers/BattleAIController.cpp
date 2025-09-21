@@ -2,9 +2,26 @@
 
 
 #include "Controllers/BattleAIController.h"
+#include "Components/DamageWidgetTextComponent.h"
+#include "UI/Battle/DamageNumberWidget.h"
+#include "Characters/UnitBaseCharacter.h"
 
 ABattleAIController::ABattleAIController()
 {
+}
+
+void ABattleAIController::ShowDamageNumber(float Damage, bool bIsCritical, bool bIsHeal, AUnitBaseCharacter* Target)
+{
+	if (DamageNumberWidgetClass)
+	{
+		UDamageWidgetTextComponent* DamageText = NewObject<UDamageWidgetTextComponent>(Target);
+
+		DamageText->SetDamageWidgetClass(DamageNumberWidgetClass);
+		DamageText->RegisterComponent();
+		DamageText->AttachToComponent(Target->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+		DamageText->SetDamageText(Damage);
+
+	}
 }
 
 void ABattleAIController::OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result)

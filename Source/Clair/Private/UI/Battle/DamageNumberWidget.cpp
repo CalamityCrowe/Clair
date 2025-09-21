@@ -29,6 +29,7 @@ void UDamageNumberWidget::SetDamageNumber(int32 Damage, bool bIsCritical, bool b
 		}
 	
 		DamageText->SetText(FText::FromString(DamageString));
+		 
 	}
 
 }

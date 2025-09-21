@@ -9,7 +9,8 @@
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnMoveCompletedDelegate);
 
 
-
+class UDamageNumberWidget;
+class AUnitBaseCharacter;
 /**
  * 
  */
@@ -23,7 +24,12 @@ public:
 	FOnMoveCompletedDelegate MoveToAttackDelegate;
 	FOnMoveCompletedDelegate MoveToStartDelegate;
 
+	void ShowDamageNumber(float Damage, bool bIsCritical, bool bIsHeal, AUnitBaseCharacter* Target);
+
 private: 
 
 	virtual void OnMoveCompleted(FAIRequestID RequestID, const FPathFollowingResult& Result) override;
+
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<UDamageNumberWidget> DamageNumberWidgetClass;
 };
