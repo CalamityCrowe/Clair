@@ -27,6 +27,7 @@ void UActionsWidget::NativeDestruct()
 	Super::NativeDestruct();
 }
 
+
 void UActionsWidget::SetBoundCharacter(AUnitBaseCharacter* NewCharacter)
 {
 	BoundCharacter = NewCharacter;
