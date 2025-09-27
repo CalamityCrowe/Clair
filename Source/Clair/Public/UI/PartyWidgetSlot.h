@@ -11,6 +11,7 @@ class UHorizontalBox;
 class UTextBlock;
 class UProgressBar;
 class AUnitBaseCharacter;
+class UAsyncTaskAttributeChange;
 
 /**
  * 
@@ -60,6 +61,22 @@ protected:
 
 	UFUNCTION(BlueprintPure)
 	float UpdateProgressBar();
+
+private: 
+	UPROPERTY()
+	TObjectPtr<UAsyncTaskAttributeChange> AttributeChangeTask;
+	UFUNCTION()
+	void UpdateHealth(FGameplayAttribute Attribute, float NewValue, float MaxValue);
+	UFUNCTION()
+	void UpdateMana(FGameplayAttribute Attribute, float NewValue, float OldValue);
+
+	float CurrentHP;
+	float TargetHP;
+	float OldHP;
+
+	FTimerHandle StatUpdateTimerHandle;
+
+	void UpdateHealthText();
 
 	//UPROPERTY(meta = (BindWidget))
 	//UProgressBar* MPBar;

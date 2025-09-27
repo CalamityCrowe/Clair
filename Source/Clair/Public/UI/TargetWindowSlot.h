@@ -10,9 +10,6 @@
  * 
  */
 
-class AUnitBaseCharacter;
-
-
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTargetChosen,AUnitBaseCharacter*, Unit);
 
 class UButton; 
@@ -49,6 +46,9 @@ protected:
 	void OnUnhovered();
 
 private:
+
+
+
 	TObjectPtr<UMaterialInstanceDynamic> ButtonMaterial;
 	FButtonStyle ButtonStyle;
 	FTimerHandle FillTimerHandle;

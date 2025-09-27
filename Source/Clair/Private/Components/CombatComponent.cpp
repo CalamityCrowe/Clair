@@ -57,6 +57,21 @@ void UCombatComponent::StartUnitTurn()
 		}
 		SetCamera();
 	}
+	else
+	{
+		if(AClairGamemode* GM = GetWorld()->GetAuthGameMode<AClairGamemode>())
+		{
+			TArray<APartyUnitBase*> PartyUnits = GM->GetPartyUnits();
+			if (PartyUnits.Num() > 0)
+			{
+				int32 RandomIndex = UKismetMathLibrary::RandomIntegerInRange(0, PartyUnits.Num() - 1);
+				UnitTarget = PartyUnits[RandomIndex];
+				AttackCommand();
+				SetCamera();
+			}
+		}
+
+	}
 }
 
 void UCombatComponent::EndUnitTurn()

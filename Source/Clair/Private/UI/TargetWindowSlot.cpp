@@ -71,6 +71,7 @@ void UTargetWindowSlot::OnUnhovered()
 	GetWorld()->GetTimerManager().SetTimer(FillTimerHandle, this, &UTargetWindowSlot::HoveredFill, 0.01f, true);
 }
 
+
 void UTargetWindowSlot::HoveredFill()
 {
 	Elapsed += bIsFilling ? 0.05 : -0.02;
