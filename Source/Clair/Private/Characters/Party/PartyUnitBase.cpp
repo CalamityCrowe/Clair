@@ -41,4 +41,6 @@ void APartyUnitBase::IntializeAttributes()
 	ASC->SetNumericAttributeBase(AttributeSetBase->GetStrengthAttribute(), DefaultStats.Strength);
 	ASC->SetNumericAttributeBase(AttributeSetBase->GetMagicAttribute(), DefaultStats.Magic);
 	ASC->SetNumericAttributeBase(AttributeSetBase->GetSpiritAttribute(), DefaultStats.Spirit);
+	ASC->SetNumericAttributeBase(AttributeSetBase->GetAttackAttribute(), DefaultStats.Attack);
+	ASC->SetNumericAttributeBase(AttributeSetBase->GetLevelAttribute(), DefaultStats.Level);
 }

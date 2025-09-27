@@ -23,6 +23,12 @@ public:
 	int32 Magic;
 	UPROPERTY(EditDefaultsOnly)
 	int32 Spirit;
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 Attack; 
+
+	UPROPERTY(EditDefaultsOnly)
+	int32 Level;
 };
 
 USTRUCT(BlueprintType)

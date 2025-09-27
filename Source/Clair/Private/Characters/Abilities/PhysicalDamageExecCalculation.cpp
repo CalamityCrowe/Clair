@@ -86,9 +86,9 @@ void UPhysicalDamageExecCalculation::Execute_Implementation(const FGameplayEffec
 
 	// Basic Physical Damage Formula
 
-	float BaseDamage = Attack - Defense;
+	float BaseDamage = FMath::Max(1,Attack - Defense);
 	float Bonus = Strength + FMath::RandHelper(FMath::Floor((Level + Strength) / 8) + 1); 
-	float TotalDamage = BaseDamage * Bonus; 
+	float TotalDamage = (BaseDamage + Bonus) ; 
 
 	OutExecutionOutput.AddOutputModifier(FGameplayModifierEvaluatedData(DamageStatics().DamageDef.AttributeToCapture, EGameplayModOp::Additive, TotalDamage));
 

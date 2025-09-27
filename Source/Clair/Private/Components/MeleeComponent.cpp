@@ -50,7 +50,6 @@ void UMeleeComponent::HitDetect()
 
 	UKismetSystemLibrary::SphereTraceMultiForObjects(this, Start, Start, CurrentRadius, ObjectTypes, false, IgnoreActors, EDrawDebugTrace::None, Hits, true);
 	// draw a debug sphere 
-	UKismetSystemLibrary::DrawDebugSphere(this, Start, CurrentRadius, 12, FLinearColor::Red, 2.0f, 1.0f);
 	if (Hits.Num() > 0)
 	{
 		for (const FHitResult& Hit : Hits)
